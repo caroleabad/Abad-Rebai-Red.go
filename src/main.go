@@ -102,10 +102,11 @@ func WaitForInput() string {
 	}
 	return scanner.Text()
 }
-func (p *personage) dead() {
+func (p *personage) dead() int {
 	if p.vieactuel == 0 {
 		fmt.Println("le joueur est mort ")
 		p.vieactuel = p.viemax / 2
-		fmt.Println("Le joueur est ressuscité avec %d points de vie\n", p.vieactuel)
+		fmt.Println("Le joueur est ressuscité avec des  points de vie\n", p.vieactuel)
 	}
+	return 0
 }
