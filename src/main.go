@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 )
+//tests
 
 type personage struct {
 	name       string

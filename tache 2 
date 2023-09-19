@@ -1,0 +1,69 @@
+package main 
+
+import (
+	"fmt"
+	)
+type personnage struct {
+	nom  string 
+	classe string 
+	niveau int 
+    des_points_de_vie_maximum int 
+    des_points_de_vie_actuels  int 
+    inventaire  map[string]int
+}
+ 
+func (p *personnage) init (nom string, classe string, niveau int, pv_max int, pv_actuels int, inventaire map[string]int) {
+	P.nom = nom
+    p.classe = classe
+	p.niveau = niveau 
+	p.pv_actuels_max = pv_actuels_max
+	p.pv_actuels = pv_actuels
+	p.inventaire = inventaire
+
+}
+func main() {
+	var p1 personnage
+	p1.Init("rihem", "Elfe", 1, 100, 40, map[string]int{"Potions": 3})
+	p1.DisplayInfo()
+	p1.AccessInventory()
+}	p1.TakePot()
+func (p *personnage) DisplayInfo() {
+	fmt.Printf("Nom : %s\n", p.nom)
+	fmt.Printf("Classe : %s\n", p.classe)
+	fmt.Printf("Niveau : %d\n", p.niveau)
+	fmt.Printf("Points de vie maximum : %d\n", p.pv_max)
+	fmt.Printf("Points de vie actuels : %d\n", p.p_actuels)
+	fmt.Printf("Inventaire : %s\n", p.inventaire)
+}
+func (p *personnage) AccessInventory(){
+	for objet range p.inventaire{
+		fmt.Println(objet, " : ", p.inventaire[objet])
+	}
+}
+
+func (p *personage) TakePot() {
+	if p.inventaire["potions"] > 0 {
+		p.inventaire["potions"]--
+    
+        p.pv_actuels = 90
+		fmt.Println("Vie actuelle : ", p.pv_actuels) 
+	}
+}
+func (p *personnage) dead() {
+	if p.pv_actuels = 0 {
+		fmt.println("le joueur est mort ")
+		p.pv_actuels= p.pv_actuels_max /2 
+		fmt.println(" je joueur est ressuscité avec %d points de vie ")
+	}
+}
+func poisonPot 
+
+
+
+
+
+
+
+
+
+
