@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 )
+
 //tests
 
 type personage struct {
@@ -49,11 +50,11 @@ func main() {
 		} else if reponse == "2" {
 			p.inventaire["clefs"]++
 			println("vous avez bien acheter")
-		}else if reponse == "3"{
+		} else if reponse == "3" {
 			p.inventaire["hache"]++
 			println("vous avez bien acheter")
 		}
-		
+
 		break
 	case "3":
 		println("Quitter")
@@ -101,10 +102,10 @@ func WaitForInput() string {
 	}
 	return scanner.Text()
 }
-func (p *personnage) dead() {
-	if p.vieactuel = 0 { 
-		fmt.println("le joueur est mort ")
-		p.vieactuel= p.pv_actuels_max /2 
-		fmt.println(" je joueur est ressuscité avec %d points de vie ")
+func (p *personage) dead() {
+	if p.vieactuel == 0 {
+		fmt.Println("le joueur est mort ")
+		p.vieactuel = p.viemax / 2
+		fmt.Println("Le joueur est ressuscité avec %d points de vie\n", p.vieactuel)
 	}
 }
