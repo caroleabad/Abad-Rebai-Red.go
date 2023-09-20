@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 )
+
 type personage struct {
 	name       string
 	class      string
@@ -15,6 +16,7 @@ type personage struct {
 	vieactuel  int
 	inventaire map[string]int
 }
+
 func main() {
 
 	var p personage
@@ -48,11 +50,11 @@ func main() {
 		} else if reponse == "2" {
 			p.inventaire["clefs"]++
 			println("vous avez bien acheter")
-		}else if reponse == "3"{
+		} else if reponse == "3" {
 			p.inventaire["hache"]++
 			println("vous avez bien acheter")
 		}
-		
+
 		break
 	case "3":
 		println("Quitter")
@@ -105,7 +107,7 @@ func (p *personage) dead() {
 		fmt.Println("Le joueur est mort !")
 		p.vieactuel = p.viemax / 2
 		fmt.Printf("Le joueur a été ressuscité avec 50% de ses points de vie maximum : points de vie.\n", p.vieactuel)
-}
+	}
 }
 
 func (p *personage) poisonPot() {
@@ -122,4 +124,3 @@ func (p *personage) poisonPot() {
 
 	fmt.Println("Le poison a cessé de faire effet.")
 }
-	 
