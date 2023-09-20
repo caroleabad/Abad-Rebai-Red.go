@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+//tests
+
 type personage struct {
 	name       string
 	class      string
@@ -17,6 +19,14 @@ type personage struct {
 	inventaire map[string]int
 }
 
+func (p personage) init(name string, class string, level int, vieactuel int, viemax int, inventaire map[string]int) {
+	p.name = name
+	p.class = class
+	p.level = level
+	p.viemax = viemax
+	p.vieactuel = vieactuel
+	p.inventaire = inventaire
+}
 func main() {
 
 	var p personage
