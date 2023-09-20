@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 )
-//tests
-
 type personage struct {
 	name       string
 	class      string
@@ -16,7 +15,6 @@ type personage struct {
 	vieactuel  int
 	inventaire map[string]int
 }
-
 func main() {
 
 	var p personage
@@ -31,6 +29,7 @@ func main() {
 	println("1 Jouer")
 	println("2 Marchand")
 	println("3 Quitter")
+	time.Sleep(1 * time.Second)
 	input := WaitForInput()
 
 	switch input {
@@ -101,10 +100,26 @@ func WaitForInput() string {
 	}
 	return scanner.Text()
 }
-func (p *personnage) dead() {
-	if p.vieactuel = 0 { 
-		fmt.println("le joueur est mort ")
-		p.vieactuel= p.pv_actuels_max /2 
-		fmt.println(" je joueur est ressuscité avec %d points de vie ")
-	}
+func (p *personage) dead() {
+	if p.vieactuel <= 0 {
+		fmt.Println("Le joueur est mort !")
+		p.vieactuel = p.viemax / 2
+		fmt.Printf("Le joueur a été ressuscité avec 50% de ses points de vie maximum : points de vie.\n", p.vieactuel)
 }
+}
+
+func (p *personage) poisonPot() {
+
+	dureePoison := 3
+	degatsParSeconde := 10
+
+	fmt.Printf("Le poison inflige %d points de dégâts par seconde pendant %d secondes.\n", degatsParSeconde, dureePoison)
+
+	for i := 1; i <= dureePoison; i++ {
+		p.vieactuel -= degatsParSeconde
+		fmt.Printf("Seconde %d : Points de vie actuels : %d / Points de vie maximum : %d\n", i, p.vieactuel, p.viemax)
+	}
+
+	fmt.Println("Le poison a cessé de faire effet.")
+}
+	 
