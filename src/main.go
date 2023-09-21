@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 )
 
 //tests
@@ -21,7 +20,7 @@ type personage struct {
 	inventaire map[string]int
 }
 
-func (p personage) init(name string, class string, level int, vieactuel int, viemax int, inventaire map[string]int) {
+func (p *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int) {
 	p.name = name
 	p.class = class
 	p.level = level
@@ -29,52 +28,61 @@ func (p personage) init(name string, class string, level int, vieactuel int, vie
 	p.vieactuel = vieactuel
 	p.inventaire = inventaire
 }
+
+func (p *personage) potion() {
+	if p.vieactuel+50 >= p.viemax {
+		p.vieactuel = p.viemax
+	} else {
+		p.vieactuel += 50
+	}
+
+	fmt.Println("Vos PV sont de  : ", p.vieactuel, "/", p.viemax)
+}
+
 func main() {
 
 	var p personage
 
-	p.name = "Carole"
-	p.class = "Elfe"
-	p.level = 1
-	p.viemax = 100
-	p.vieactuel = 40
-	p.inventaire = map[string]int{"potions": 3, "clefs": 5, "hache": 1}
+	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 0, "clefs": 5, "hache": 1})
+	p.DisplayInfo()
 
-	println("1 Jouer")
-	println("2 Marchand")
-	println("3 Quitter")
-	time.Sleep(1 * time.Second)
-	input := WaitForInput()
+	p.potion()
 
-	switch input {
-	case "1":
-		println("Jouer")
-		break
-	case "2":
-		println("Que voulez-vous acheter ?")
-		println("1 Potion")
-		println("2 clef")
-		println("3 hache")
-		reponse := WaitForInput()
-		if reponse == "1" {
-			p.inventaire["potions"]++
-			println("vous avez bien acheter")
-		} else if reponse == "2" {
-			p.inventaire["clefs"]++
-			println("vous avez bien acheter")
-		} else if reponse == "3" {
-			p.inventaire["hache"]++
-			println("vous avez bien acheter")
-		}
+	// println("1 Jouer")
+	// println("2 Marchand")
+	// println("3 Quitter")
+	// time.Sleep(1 * time.Second)
+	// input := WaitForInput()
 
-		break
-	case "3":
-		println("Quitter")
-		break
-	default:
-		println("Mauvaise réponse")
-		break
-	}
+	// switch input {
+	// case "1":
+	// 	println("Jouer")
+	// 	break
+	// case "2":
+	// 	println("Que voulez-vous acheter ?")
+	// 	println("1 Potion")
+	// 	println("2 clef")
+	// 	println("3 hache")
+	// 	reponse := WaitForInput()
+	// 	if reponse == "1" {
+	// 		p.inventaire["potions"]++
+	// 		println("vous avez bien acheter")
+	// 	} else if reponse == "2" {
+	// 		p.inventaire["clefs"]++
+	// 		println("vous avez bien acheter")
+	// 	} else if reponse == "3" {
+	// 		p.inventaire["hache"]++
+	// 		println("vous avez bien acheter")
+	// 	}
+
+	// 	break
+	// case "3":
+	// 	println("Quitter")
+	// 	break
+	// default:
+	// 	println("Mauvaise réponse")
+	// 	break
+	// }
 }
 
 func (p personage) DisplayInfo() {
