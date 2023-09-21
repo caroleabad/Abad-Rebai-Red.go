@@ -10,6 +10,7 @@ import (
 
 //tests
 //Hello Carole
+//Hello Rihem
 
 type personage struct {
 	name       string
