@@ -9,6 +9,7 @@ import (
 )
 
 //tests
+//Hello Carole
 
 type personage struct {
 	name       string
