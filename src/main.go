@@ -18,15 +18,15 @@ type personage struct {
 	skill      []string
 }
 
-func (p *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int, skill []string) {
-	p.name = name
-	p.class = class
-	p.level = level
-	p.viemax = viemax
-	p.vieactuel = vieactuel
-	p.inventaire = inventaire
-	p.skill = skill
-} 
+func (p1 *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int, skill []string) {
+	p1.name = name
+	p1.class = class
+	p1.level = level
+	p1.viemax = viemax
+	p1.vieactuel = vieactuel
+	p1.inventaire = inventaire
+	p1.skill = skill
+}
 
 func (p *personage) potion() {
 	if p.vieactuel+50 >= p.viemax {
@@ -41,47 +41,70 @@ func (p *personage) potion() {
 func main() {
 
 	var p personage
-	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1 , "boule de feu":1}, []string{"coup de poing"})
-	p.DisplayInfo()
-	p.PoisonPot()
-	p.potion()
-	p.spellBook()
+	var p1 personage
 
-	// println("1 Jouer")
-	// println("2 Marchand")
-	// println("3 Quitter")
-	// time.Sleep(1 * time.Second)
-	// input := WaitForInput()
+	p.init("caROle", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1}, []string{"coup de poing"})
+	p1.init("Rihem", "dragon", 1, 100, 40, map[string]int{"boule de feu": 3, " potion": 1, "épée": 1, "bouclier": 1}, []string{"voler dans les airs"})
+	p.charCreation()
+	p.Menu()
 
-	// switch input {
-	// case "1":
-	// 	println("Jouer")
-	// 	break
-	// case "2":
-	// 	println("Que voulez-vous acheter ?")
-	// 	println("1 Potion")
-	// 	println("2 clef")
-	// 	println("3 hache")
-	// 	reponse := WaitForInput()
-	// 	if reponse == "1" {
-	// 		p.inventaire["potions"]++
-	// 		println("vous avez bien acheter")
-	// 	} else if reponse == "2" {
-	// 		p.inventaire["clefs"]++
-	// 		println("vous avez bien acheter")
-	// 	} else if reponse == "3" {
-	// 		p.inventaire["hache"]++
-	// 		println("vous avez bien acheter")
-	// 	}
+	/*  println("1 Jouer")
+	println("2 Marchand")
+	println("3 Quitter")
+	time.Sleep(1 * time.Second)
+	input := WaitForInput()
 
-	// 	break
-	// case "3":
-	// 	println("Quitter")
-	// 	break
-	// default:
-	// 	println("Mauvaise réponse")
-	// 	break
-	// }
+	switch input {
+	case "1":
+		println("Jouer")
+		break
+	case "2":
+		println("Que voulez-vous acheter ?")
+		println("1 Potion")
+		println("2 clef")
+		println("3 hache")
+		reponse := WaitForInput()
+		if reponse == "1" {
+			p.inventaire["potions"]++
+			println("vous avez bien acheter")
+		} else if reponse == "2" {
+			p.inventaire["clefs"]++
+			println("vous avez bien acheter")
+		} else if reponse == "3" {
+			p.inventaire["hache"]++
+			println("vous avez bien acheter")
+		}
+
+		break
+	case "3":
+		println("Quitter")
+		break
+	default:
+		println("Mauvaise réponse")
+		break
+	} */
+}
+
+func (p personage) Menu() {
+	println("1 Afficher les informations du joueur")
+	println("2 Afficher inventaire")
+	println("3 Quitter")
+	time.Sleep(1 * time.Second)
+	input := WaitForInput()
+
+	switch input {
+	case "1":
+		p.DisplayInfo()
+		p.Menu()
+	case "2":
+		p.AccessInventory()
+		p.Menu()
+	case "3":
+		println("Quitter")
+	default:
+		println("Mauvaise réponse")
+		break
+	}
 }
 
 func (p *personage) DisplayInfo() {
@@ -142,6 +165,7 @@ func WaitForInput() string {
 	}
 	return scanner.Text()
 }
+
 func (p *personage) dead() {
 	if p.vieactuel <= 0 {
 		fmt.Println("Le joueur est mort !")
@@ -187,7 +211,7 @@ func (p *personage) Marchand() {
 	println("1 Potion")
 	println("2 clef")
 	println("3 hache")
-	println( "4 boule de feu")
+	println("4 boule de feu")
 	reponse := WaitForInput()
 	if reponse == "1" {
 		p.inventaire["potions"]++
@@ -198,9 +222,29 @@ func (p *personage) Marchand() {
 	} else if reponse == "3" {
 		p.inventaire["hache"]++
 		println("vous avez bien acheter")
-	}else if reponse == "4"{
+	} else if reponse == "4" {
 		p.inventaire["boule de feu"]++
 		println("vous avez bien acheter")
 	}
-	
+}
+func (p1 *personage) charCreation() {
+
+	a := ""
+	for i, v := range p1.name {
+		if i == 0 {
+			if 97 <= v && v <= 122 {
+				a += string(v - 32)
+			} else {
+				a += string(v)
+			}
+		} else {
+			if 65 <= v && v <= 90 {
+				a += string(v + 32)
+			} else {
+				a += string(v)
+			}
+		}
+	}
+	p1.name = a
+
 }
