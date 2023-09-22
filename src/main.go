@@ -16,9 +16,10 @@ type personage struct {
 	vieactuel  int
 	inventaire map[string]int
 	skill      []string
+	sort []string
 }
 
-func (p *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int, skill []string) {
+func (p *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int, skill []string,sort []string ) {
 	p.name = name
 	p.class = class
 	p.level = level
@@ -26,7 +27,8 @@ func (p *personage) init(name string, class string, level int, viemax int, vieac
 	p.vieactuel = vieactuel
 	p.inventaire = inventaire
 	p.skill = skill
-}
+	p.sort = sort 
+} 
 
 func (p *personage) potion() {
 	if p.vieactuel+50 >= p.viemax {
@@ -41,14 +43,11 @@ func (p *personage) potion() {
 func main() {
 
 	var p personage
-	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1}, []string{"coup de poing"})
+	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1}, []string{"coup de poing"}, []string{"boule de feu"})
 	p.DisplayInfo()
 	p.PoisonPot()
-
-	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 0, "clefs": 5, "hache": 1}, []string{"coup de poing"})
-	p.DisplayInfo()
-
 	p.potion()
+	p.spellBook()
 
 	// println("1 Jouer")
 	// println("2 Marchand")
@@ -190,6 +189,7 @@ func (p *personage) Marchand() {
 	println("1 Potion")
 	println("2 clef")
 	println("3 hache")
+	println( "4 boule de feu")
 	reponse := WaitForInput()
 	if reponse == "1" {
 		p.inventaire["potions"]++
@@ -200,5 +200,9 @@ func (p *personage) Marchand() {
 	} else if reponse == "3" {
 		p.inventaire["hache"]++
 		println("vous avez bien acheter")
+	}else if reponse == "4"{
+		p.inventaire["boule de feu"]++
+		println("vous avez bien acheter")
 	}
+	
 }
