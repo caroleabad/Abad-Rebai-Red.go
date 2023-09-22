@@ -16,10 +16,9 @@ type personage struct {
 	vieactuel  int
 	inventaire map[string]int
 	skill      []string
-	sort []string
 }
 
-func (p *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int, skill []string,sort []string ) {
+func (p *personage) init(name string, class string, level int, viemax int, vieactuel int, inventaire map[string]int, skill []string) {
 	p.name = name
 	p.class = class
 	p.level = level
@@ -27,7 +26,6 @@ func (p *personage) init(name string, class string, level int, viemax int, vieac
 	p.vieactuel = vieactuel
 	p.inventaire = inventaire
 	p.skill = skill
-	p.sort = sort 
 } 
 
 func (p *personage) potion() {
@@ -43,7 +41,7 @@ func (p *personage) potion() {
 func main() {
 
 	var p personage
-	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1}, []string{"coup de poing"}, []string{"boule de feu"})
+	p.init("Carole", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1 , "boule de feu":1}, []string{"coup de poing"})
 	p.DisplayInfo()
 	p.PoisonPot()
 	p.potion()
