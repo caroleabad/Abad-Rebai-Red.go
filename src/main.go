@@ -49,7 +49,7 @@ func main() {
 		p1.init("Rihem", "humain,elfe,nain", 1, 100, 40, map[string]int{"boule de feu": 3, " potion": 1, "épée": 1, "bouclier": 1}, []string{"voler dans les airs"})
 		p.charCreation()
 		p.Menu()*/
-	p.initPerso() 
+	p.initPerso()
 
 	/*  println("1 Jouer")
 	println("2 Marchand")
@@ -93,7 +93,10 @@ func (p personage) Menu() {
 	for !out {
 		fmt.Println("1 Afficher les informations du joueur")
 		fmt.Println("2 Afficher inventaire")
-		fmt.Println("3 Quitter")
+		fmt.Println("3 Afficher le marchand")
+		fmt.Println("4 Afficher monstre")
+		fmt.Println("5 Quitter")
+
 		time.Sleep(1 * time.Second)
 		input := WaitForInput()
 
@@ -105,6 +108,12 @@ func (p personage) Menu() {
 			p.AccessInventory()
 			p.Menu()
 		case "3":
+			p.Marchand()
+			p.Menu()
+		case "4":
+			p.monstre()
+			p.Menu()
+		case "5":
 			fmt.Println("Quitter")
 			out = true
 
@@ -352,8 +361,63 @@ var livreDeSort = product{
 	name:  "livre de sort: boule de feu ",
 	price: 25,
 }
+var fourrure = product{
+	name:  "fourrure de loup",
+	price: 4,
+}
+var PeauDeTroll = product{
+	name:  "peau de troll",
+	price: 7,
+}
+var Cuir = product{
+	name:  "cuir de sanglier",
+	price: 3,
+}
+var Plume = product{
+	name:  "plume de corbeau ",
+	price: 1,
+}
+var Chapeau = product{
+	name:  "chapeau de l'aventurier ",
+	price: 5,
+}
+var Tunique = product{
+	name:  " tunique de l'aventurier ",
+	price: 5,
+}
+var Bottes = product{
+	name:  " bottes de l'aventurier",
+	price: 5,
+}
 var listeInventaire = []product{
 	potionDeVie,
 	potionDePoison,
 	livreDeSort,
+	fourrure,
+	PeauDeTroll,
+	Cuir,
+	Plume,
+	Chapeau,
+	Tunique,
+	Bottes,
+}
+
+type monstre struct {
+	name          string
+	pvmax         int
+	pvactuel      int
+	pointsattaque int
+}
+
+func (p *monstre) Init(name string, pvmax int, pvactuel int, pointsattaque int) {
+	p.name = name
+	p.pvmax = pvmax
+	p.pvactuel = pvactuel
+	p.pointsattaque = pointsattaque
+}
+func (p *monstre) InitGoblin() {
+	fmt.Println("mon nom sera :", p.name)
+	fmt.Println("mes points de vie maximum sont:", p.pvmax)
+	fmt.Println("mes points de vie actuels sont:", p.pvactuel)
+	fmt.Println("mes points d'attaque sont :", p.pointsattaque)
 }
