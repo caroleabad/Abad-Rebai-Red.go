@@ -50,6 +50,7 @@ func main() {
 		p.charCreation()
 		p.Menu()*/
 	p.initPerso()
+	
 
 	/*  println("1 Jouer")
 	println("2 Marchand")
@@ -94,8 +95,7 @@ func (p personage) Menu() {
 		fmt.Println("1 Afficher les informations du joueur")
 		fmt.Println("2 Afficher inventaire")
 		fmt.Println("3 Afficher le marchand")
-		fmt.Println("4 Afficher monstre")
-		fmt.Println("5 Quitter")
+		fmt.Println("4 Quitter")
 
 		time.Sleep(1 * time.Second)
 		input := WaitForInput()
@@ -111,12 +111,8 @@ func (p personage) Menu() {
 			p.Marchand()
 			p.Menu()
 		case "4":
-			p.monstre()
-			p.Menu()
-		case "5":
 			fmt.Println("Quitter")
 			out = true
-
 		default:
 			fmt.Println("Mauvaise réponse")
 		}
@@ -409,15 +405,22 @@ type monstre struct {
 	pointsattaque int
 }
 
-func (p *monstre) Init(name string, pvmax int, pvactuel int, pointsattaque int) {
-	p.name = name
-	p.pvmax = pvmax
-	p.pvactuel = pvactuel
-	p.pointsattaque = pointsattaque
+func (m *monstre) Init(name string, pvmax int, pvactuel int, pointsattaque int) {
+	m.name = name
+	m.pvmax = pvmax
+	m.pvactuel = pvactuel
+	m.pointsattaque = pointsattaque
 }
-func (p *monstre) InitGoblin() {
-	fmt.Println("mon nom sera :", p.name)
-	fmt.Println("mes points de vie maximum sont:", p.pvmax)
-	fmt.Println("mes points de vie actuels sont:", p.pvactuel)
-	fmt.Println("mes points d'attaque sont :", p.pointsattaque)
+func (m *monstre) InitGoblin() {
+	fmt.Println("mon nom sera :", m.name)
+	fmt.Println("mes points de vie maximum sont:", m.pvmax)
+	fmt.Println("mes points de vie actuels sont:", m.pvactuel)
+	fmt.Println("mes points d'attaque sont :", m.pointsattaque)
+}
+
+var Goblin= monstre{
+name:"Gobelin",
+pvmax:40,
+pvactuel:40,
+pointsattaque:5,
 }
