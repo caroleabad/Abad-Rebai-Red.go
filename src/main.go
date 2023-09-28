@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-type personage struct {
+type personnage struct {
 	name       string
 	class      string
 	level      int
@@ -18,19 +18,21 @@ type personage struct {
 	inventaire map[string]int
 	skill      []string
 	argent     int
+	equipement []string
 }
 
-func (p1 *personage) init(name string, class string, level int, viemax int, vieactuel int, sort string, argent int) {
-	p1.name = name
-	p1.class = class
-	p1.level = level
-	p1.viemax = viemax
-	p1.vieactuel = vieactuel
-	p1.skill = append(p1.skill, sort)
-	p1.argent = argent
+func (p *personnage) init(name string, class string, level int, viemax int, vieactuel int, sort string, argent int) {
+	p.name = name
+	p.class = class
+	p.level = level
+	p.viemax = viemax
+	p.vieactuel = vieactuel
+	p.skill = append(p.skill, sort)
+	p.argent = argent
+	p.inventaire = make(map[string]int)
 }
 
-func (p *personage) potion() {
+func (p *personnage) potion() {
 	if p.vieactuel+50 >= p.viemax {
 		p.vieactuel = p.viemax
 	} else {
@@ -42,7 +44,8 @@ func (p *personage) potion() {
 
 func main() {
 
-	var p personage
+	var p personnage
+	var m Goblin
 	//var p1 personage
 	/*
 		p.init("caROle", "Elfe", 1, 100, 80, map[string]int{"potions": 1, "clefs": 5, "hache": 1, "potions de poison": 1}, []string{"coup de poing"})
@@ -50,7 +53,10 @@ func main() {
 		p.charCreation()
 		p.Menu()*/
 	p.initPerso()
-	
+	m.InitGoblin()
+	p.dead()
+	p.poisonPot()
+	p.spellBook()
 
 	/*  println("1 Jouer")
 	println("2 Marchand")
@@ -89,7 +95,7 @@ func main() {
 	} */
 }
 
-func (p personage) Menu() {
+func (p personnage) Menu() {
 	out := false
 	for !out {
 		fmt.Println("1 Afficher les informations du joueur")
@@ -119,7 +125,7 @@ func (p personage) Menu() {
 	}
 }
 
-func (p *personage) DisplayInfo() {
+func (p *personnage) DisplayInfo() {
 
 	fmt.Println("---------------")
 	fmt.Println("je m'appelle", p.name)
@@ -129,17 +135,30 @@ func (p *personage) DisplayInfo() {
 	fmt.Println("J'en ai actuellement", p.vieactuel)
 	fmt.Println("j'ai dans l'inventaire", p.inventaire)
 	fmt.Println("Compétences : ", p.skill)
+	fmt.Println("voici mon argent:", p.argent)
 }
 
-func (p *personage) AccessInventory() {
+func (p *personnage) AccessInventory() {
 
 	fmt.Println("Dans mon inventaire j'ai")
 	for clef, valeur := range p.inventaire {
 		fmt.Println(valeur, "   ", clef)
 	}
 }
+func (p *personnage) equiper(e equipement) {
 
-func (p *personage) TakePot() {
+	for _, equip := range p.equipement {
+		if e.name == equip {
+			fmt.Println("j'ai déja cet équipement")
+			return
+		}
+	}
+
+	p.viemax += e.pviemax
+	p.equipement = append(p.equipement, e.name)
+}
+
+func (p *personnage) TakePot() {
 	if p.inventaire["potions"] > 0 {
 		fmt.Println("Vous prenez une potion de vie")
 		p.inventaire["potions"]--
@@ -154,7 +173,7 @@ func (p *personage) TakePot() {
 	}
 }
 
-func (p *personage) PoisonPot() {
+func (p *personnage) PoisonPot() {
 	if p.inventaire["potions de poison"] > 0 {
 		fmt.Println("Vous prenez une potion de poison")
 		p.inventaire["potions de poison"]--
@@ -178,7 +197,7 @@ func WaitForInput() string {
 	return scanner.Text()
 }
 
-func (p *personage) dead() {
+func (p *personnage) dead() {
 	if p.vieactuel <= 0 {
 		fmt.Println("Le joueur est mort !")
 		p.vieactuel = p.viemax / 2
@@ -186,7 +205,7 @@ func (p *personage) dead() {
 	}
 }
 
-func (p *personage) poisonPot() {
+func (p *personnage) poisonPot() {
 
 	dureePoison := 3
 	degatsParSeconde := 10
@@ -200,7 +219,7 @@ func (p *personage) poisonPot() {
 
 	fmt.Println("Le poison a cessé de faire effet.")
 }
-func (p *personage) spellBook() {
+func (p *personnage) spellBook() {
 	if p.CheckSpell("Boule de feu") {
 		fmt.Println("sort deja present")
 	} else {
@@ -210,7 +229,7 @@ func (p *personage) spellBook() {
 
 }
 
-func (p *personage) CheckSpell(spellName string) bool {
+func (p *personnage) CheckSpell(spellName string) bool {
 	for _, valeur := range p.skill {
 		if valeur == spellName {
 			return true
@@ -218,7 +237,7 @@ func (p *personage) CheckSpell(spellName string) bool {
 	}
 	return false
 }
-func (p *personage) Marchand() {
+func (p *personnage) Marchand() {
 	for i, v := range listeInventaire {
 		fmt.Println((i + 1), " ", v.name, " ", v.price, "$")
 	}
@@ -266,7 +285,7 @@ func (p *personage) Marchand() {
 //	fmt.Println("vous avez bien acheter")
 //}
 
-func (p1 *personage) charCreation() {
+func (p1 *personnage) charCreation() {
 
 	a := ""
 	for i, v := range p1.name {
@@ -287,7 +306,7 @@ func (p1 *personage) charCreation() {
 	p1.name = a
 
 }
-func (p *personage) initPerso() {
+func (p *personnage) initPerso() {
 	fmt.Println("entrez votre nom:")
 	var name string
 	fmt.Scan(&name)
@@ -330,7 +349,7 @@ func (p *personage) initPerso() {
 
 }
 
-func (p *personage) ajouterObjet(objet string) {
+func (p *personnage) ajouterObjet(objet string) {
 
 	if len(p.inventaire) <= 10 || p.inventaire[objet] > 0 {
 		p.inventaire[objet] += 1
@@ -398,29 +417,60 @@ var listeInventaire = []product{
 	Bottes,
 }
 
-type monstre struct {
+type Goblin struct {
 	name          string
 	pvmax         int
 	pvactuel      int
 	pointsattaque int
 }
 
-func (m *monstre) Init(name string, pvmax int, pvactuel int, pointsattaque int) {
+func (m *Goblin) Init(name string, pvmax int, pvactuel int, pointsattaque int) {
 	m.name = name
 	m.pvmax = pvmax
 	m.pvactuel = pvactuel
 	m.pointsattaque = pointsattaque
 }
-func (m *monstre) InitGoblin() {
+func (m *Goblin) InitGoblin() {
 	fmt.Println("mon nom sera :", m.name)
 	fmt.Println("mes points de vie maximum sont:", m.pvmax)
 	fmt.Println("mes points de vie actuels sont:", m.pvactuel)
 	fmt.Println("mes points d'attaque sont :", m.pointsattaque)
 }
 
-var Goblin= monstre{
-name:"Gobelin",
-pvmax:40,
-pvactuel:40,
-pointsattaque:5,
+var monstre = Goblin{
+	name:          "Goblin",
+	pvmax:         40,
+	pvactuel:      40,
+	pointsattaque: 5,
 }
+
+/* func trainingFight(p *personage,m *monstre)string{
+
+	for p.personage>0 && m.monstre>0 {
+	attack (p.personage,p.monstre)
+	} if p.monstre<= 0{
+	return p.personage
+	}
+	attack (p.monstre, p.personage)
+	if p.personage <= 0{
+		retrun p.monstre
+	}
+	return nil
+	}
+func trainingAttack(attaquant,defenseur,m *monstre)
+attack:= rand.Intn(attaquant.atack)
+defence:= rand.Int(defenseur.defence)
+dommage:= attack-defence
+
+	if dommage >0{
+		defence -= dommage
+		fmt.Println()
+	} */
+
+type equipement struct {
+	name    string
+	place   string
+	pviemax int
+	price   int
+}
+
